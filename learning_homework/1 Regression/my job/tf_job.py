@@ -32,16 +32,23 @@ for day in range(data.shape[0]//18):
 x_data = np.array(x_data)
 y_data = np.array(y_data)
 
-x_train = x_data[:3200,:]
-x_test = x_data[3200:,:]
-y_train = y_data[:3200]
-y_test = y_data[3200:]
+x_train = x_data[:4600,:]
+x_test = x_data[4600:,:]
+y_train = y_data[:4600]
+y_test = y_data[4600:]
 print(x_data)
 print(y_data)
-print(x_data.shape)
-print(y_data.shape)
+print(x_test.shape)
+print(y_test.shape)
 
-learn_model = tf.keras.Sequential(tf.keras.layers.Dense(10,input_shape=(162,)))
+learn_model = tf.keras.Sequential(tf.keras.layers.Dense(1,input_shape=(162,)))
 learn_model.summary()
 learn_model.compile(optimizer='adam',loss='mse')
 history = learn_model.fit(x_train,y_train,epochs=100)
+
+
+
+y_pre = learn_model.predict(x_test)
+loss = y_pre - y_test
+a = np.sqrt(np.mean(loss**2))
+print('test loss is %f' %(a))
